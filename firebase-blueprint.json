@@ -1,0 +1,169 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile in K118 chat application",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Unique Firebase Auth user ID"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User's public display name",
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "description": "User's email address",
+          "maxLength": 255
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Avatar URL or base64 profile image",
+          "maxLength": 2048
+        },
+        "status": {
+          "type": "string",
+          "description": "Online or offline status",
+          "enum": ["online", "offline", "away"]
+        },
+        "bio": {
+          "type": "string",
+          "description": "User status message or bio",
+          "maxLength": 300
+        },
+        "lastSeen": {
+          "type": "string",
+          "description": "ISO timestamp of last activity"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Account creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Profile update timestamp"
+        }
+      },
+      "required": ["uid", "displayName", "email", "status"]
+    },
+    "ChatRoom": {
+      "title": "ChatRoom",
+      "description": "One-to-one conversation room between two friends",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique chat room identifier"
+        },
+        "participants": {
+          "type": "string",
+          "description": "Comma-separated or participant pair identifier",
+          "maxLength": 256
+        },
+        "lastMessage": {
+          "type": "string",
+          "description": "Text of the most recent message",
+          "maxLength": 1000
+        },
+        "lastMessageSenderId": {
+          "type": "string",
+          "description": "Sender ID of the most recent message"
+        },
+        "lastMessageTimestamp": {
+          "type": "string",
+          "description": "Timestamp of the most recent message"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Room creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Room last activity timestamp"
+        }
+      },
+      "required": ["id", "participants"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Single real-time chat message",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique message document ID"
+        },
+        "chatRoomId": {
+          "type": "string",
+          "description": "Associated chat room identifier"
+        },
+        "senderId": {
+          "type": "string",
+          "description": "UID of the sending user"
+        },
+        "senderName": {
+          "type": "string",
+          "description": "Display name of sender at time of message",
+          "maxLength": 100
+        },
+        "senderPhoto": {
+          "type": "string",
+          "description": "Avatar URL of sender",
+          "maxLength": 2048
+        },
+        "recipientId": {
+          "type": "string",
+          "description": "UID of recipient friend"
+        },
+        "text": {
+          "type": "string",
+          "description": "Message content",
+          "maxLength": 5000
+        },
+        "mediaUrl": {
+          "type": "string",
+          "description": "Optional image or attachment URL",
+          "maxLength": 2048
+        },
+        "mediaType": {
+          "type": "string",
+          "description": "Type of media content",
+          "enum": ["text", "image", "audio"]
+        },
+        "read": {
+          "type": "string",
+          "description": "Read status flag",
+          "enum": ["true", "false"]
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "ISO timestamp of when the message was sent"
+        }
+      },
+      "required": ["id", "chatRoomId", "senderId", "recipientId", "text", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/User"
+      },
+      "description": "User profiles with status, bio, and last seen"
+    },
+    "/chats/{chatId}": {
+      "schema": {
+        "$ref": "#/entities/ChatRoom"
+      },
+      "description": "One-to-one chat channels"
+    },
+    "/chats/{chatId}/messages/{messageId}": {
+      "schema": {
+        "$ref": "#/entities/Message"
+      },
+      "description": "Real-time messages sent within the chat room"
+    }
+  }
+}

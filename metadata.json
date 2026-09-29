@@ -1,0 +1,8 @@
+{
+  "name": "k118lvr",
+  "description": "Build an Android app named K118. It is an online chat application with: Google Sign-In, user profile with profile photo, friend list, one-to-one real-time chat, chat messages with timestamps, online/offline user status, modern clean UI. Use Firebase Authentication and Firebase Firestore for real-time messages. Create the Android app using Kotlin and Jetpack Compose. Make the project runnable and organize all required screens, navigation, models, and Firebase integration clearly",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
